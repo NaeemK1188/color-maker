@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">test landscape portrait layout</string>
+    <string name="red_color">Ahmar</string>
+    <string name="green_color">Green</string>
+    <string name="blue_color">Blue</string>
+    <string name="reset_button">Reset</string>
+    <string name="_0_1">0.0–1.0</string>
+</resources>
+

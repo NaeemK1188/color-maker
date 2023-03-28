@@ -208,7 +208,7 @@ class MainActivity : AppCompatActivity()
             barG.progress = 0
             barB.progress = 0
 
-            // making all colors to be black
+            // making all colors to be black when reset button is hit
             viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
 
 
@@ -218,30 +218,34 @@ class MainActivity : AppCompatActivity()
 
         switchR.setOnCheckedChangeListener { compoundButton, isChecked ->
 
-            if(isChecked) // the color is off
+            if(isChecked) // the color switch is on
             {
 
                 barR.isEnabled = true // was false
                 resButton.isEnabled = true // was false
                 editTextR.isEnabled = true
-                redProgress = barR.progress
+                redProgress = barR.progress // when the switch is on it will bring back
+                // the color to the current one where it was before it switched to off
                 //barR.max = 255 // reset the max to 255
                 // intinsity of color red becomes zero
-                // all colors will be mixed except red color will be zero
+                // all colors will be mixed except red color will be zero or where the current color is
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
 
             }
 
-            else // the color is on
+            else // the color switch is off
             {
 
 
 
                 // barR.max = 0 // we set max to 0 so the seekbar stuck at 0
                 barR.isEnabled = false // was true
-                resButton.isEnabled = false // was true
+                //resButton.isEnabled = false // was true
                 editTextR.isEnabled = false
-                redProgress = 0
+                // note if we changed the redProgress = barR.progress here, it will be reflected on
+                // other switchesB and G
+                redProgress = barR.progress // this will makes it stuck at the current color although its off
+                // if we put redProgress = 0, it will makes it reset the color to black
                 // all colors are mixed
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
             }
@@ -268,7 +272,7 @@ class MainActivity : AppCompatActivity()
             {
                 //barG.max = 255
                 barG.isEnabled = false
-                resButton.isEnabled = false
+                //resButton.isEnabled = false
                 editTextG.isEnabled = false
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
             }
@@ -294,7 +298,8 @@ class MainActivity : AppCompatActivity()
             else // the color is off
             {
                 barB.isEnabled = false
-                resButton.isEnabled = false
+                //resButton.isEnabled = false we did this because we dont want the reset button to be
+                // off when we turn off the switch
                 editTextB.isEnabled = false
 
 

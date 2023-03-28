@@ -11,7 +11,7 @@ import android.widget.Switch
 
 class MainActivity : AppCompatActivity()
 {
-    private lateinit var viewBox:View
+    private lateinit var viewBox:View // instance variable of type View class
     private lateinit var resButton:Button
     private lateinit var switchR:Switch
     private lateinit var editTextR:EditText
@@ -32,8 +32,11 @@ class MainActivity : AppCompatActivity()
     var greenProgress = 0
     var blueProgress = 0
 
+    // overriding main acivity oncreate to add the oncreate of the parent class to the
+    // mainactivity class
     override fun onCreate(savedInstanceState: Bundle?)
-    {
+    { // what we would do when we create an application on phone screen
+        // oncreate is called when activity is created
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -48,21 +51,35 @@ class MainActivity : AppCompatActivity()
         this.switchG=this.findViewById(R.id.switchG)
         this.editTextG=this.findViewById(R.id.editTextNumberDecimalG)
         this.barG=this.findViewById(R.id.seekBarG)
+        barR.isEnabled = false
+        barG.isEnabled = false
+        barB.isEnabled = false
+        switchR.isChecked = false
+        switchB.isChecked = false
+        switchG.isChecked = false
+        editTextR.isEnabled = false
+        editTextG.isEnabled = false
+        editTextB.isEnabled = false
 
 
-
+        // 255 shade color from light red to dark red
         barR.max = 255 // progress ends at 255
         barR.progress = 0 // starts from 0 like barR[i]
 
         barB.max = 255
         barB.progress = 0
 
-        barG.max = 255
+        barG.max = 255 // intensity of the color
         barG.progress = 0
 
 
 
 
+
+
+        // defining an object of a class subclass of seekbar
+        // subclassing seekbar when we object an object gives you an instance
+        // the object will be the new instance of subclass of seekbar
         barR.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(sb: SeekBar?, progress: Int, p2: Boolean)
             {
@@ -81,8 +98,11 @@ class MainActivity : AppCompatActivity()
                 var percentage = (progress.toFloat() / 2.55).toInt()
 
                 redProgress = progress
+                // opacity = a hw much solid or transparent
+                // we put redProgress, greenProgress, blueProgress down to
+                // mix all colors together in view box
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
-                editTextR.setText("$percentage%")
+                editTextR.setText("$percentage%") // $add value to a string
 
             }
 
@@ -114,6 +134,8 @@ class MainActivity : AppCompatActivity()
                 //and create new color with the mixture of red, green, and blue
                 //then it set the viewBox background with new color from 0-255
                 var percentage = (progress.toFloat() / 2.55).toInt()
+                // we assigned progress to class variable blueprogess so you
+                // can use it anywhere
                 blueProgress = progress
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
                 editTextB.setText("$percentage%")
@@ -175,7 +197,7 @@ class MainActivity : AppCompatActivity()
         })
 
 
-        resButton.setOnClickListener {
+        resButton.setOnClickListener {view:View ->
             // white(R:255, G:255, B:255)
             //black(R:0, G:0, B:0)
             //Red(255, 0, 0)
@@ -186,7 +208,7 @@ class MainActivity : AppCompatActivity()
             barG.progress = 0
             barB.progress = 0
 
-
+            // making all colors to be black
             viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
 
 
@@ -198,18 +220,29 @@ class MainActivity : AppCompatActivity()
 
             if(isChecked) // the color is off
             {
-               // barR.max = 0 // we set max to 0 so the seekbar stuck at 0
-                barR.isEnabled = false
-                resButton.isEnabled = false
 
+                barR.isEnabled = true // was false
+                resButton.isEnabled = true // was false
+                editTextR.isEnabled = true
+                redProgress = barR.progress
+                //barR.max = 255 // reset the max to 255
+                // intinsity of color red becomes zero
+                // all colors will be mixed except red color will be zero
+                viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
 
             }
 
             else // the color is on
             {
-                barR.isEnabled = true
-                resButton.isEnabled = true
-                //barR.max = 255 // reset the max to 255
+
+
+
+                // barR.max = 0 // we set max to 0 so the seekbar stuck at 0
+                barR.isEnabled = false // was true
+                resButton.isEnabled = false // was true
+                editTextR.isEnabled = false
+                redProgress = 0
+                // all colors are mixed
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
             }
 
@@ -222,8 +255,11 @@ class MainActivity : AppCompatActivity()
             if(isChecked) // the color is on
             {
                 //barG.max = 0
-                barG.isEnabled = false
-                resButton.isEnabled = false
+                barG.isEnabled = true
+                resButton.isEnabled = true
+                editTextG.isEnabled = true
+
+                viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
 
 
             }
@@ -231,8 +267,9 @@ class MainActivity : AppCompatActivity()
             else // the color is off
             {
                 //barG.max = 255
-                barG.isEnabled = true
-                resButton.isEnabled = true
+                barG.isEnabled = false
+                resButton.isEnabled = false
+                editTextG.isEnabled = false
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
             }
 
@@ -244,18 +281,23 @@ class MainActivity : AppCompatActivity()
 
             if(isChecked) // the color is on
             {
-                barB.isEnabled = false
-                resButton.isEnabled = false
+                barB.isEnabled = true
+                resButton.isEnabled = true
+                editTextB.isEnabled = true
 
 
 
+                viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
 
             }
 
             else // the color is off
             {
-                barB.isEnabled = true
-                resButton.isEnabled = true
+                barB.isEnabled = false
+                resButton.isEnabled = false
+                editTextB.isEnabled = false
+
+
                 viewBox.setBackgroundColor(Color.argb(255, redProgress, greenProgress, blueProgress))
             }
 
